@@ -1,14 +1,11 @@
-/**
- *Submitted for verification at Etherscan.io on 2020-07-30
-*/
-
+// *** XMPL ***
 pragma solidity 0.6.0;
 
+//*** MATH LIB ****
 library SafeMath {
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
         uint256 c = a + b;
         require(c >= a, "SafeMath: addition overflow");
-
         return c;
     }
 
@@ -19,7 +16,6 @@ library SafeMath {
     function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b <= a, errorMessage);
         uint256 c = a - b;
-
         return c;
     }
 
@@ -30,7 +26,6 @@ library SafeMath {
 
         uint256 c = a * b;
         require(c / a == b, "SafeMath: multiplication overflow");
-
         return c;
     }
 
@@ -41,7 +36,6 @@ library SafeMath {
     function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b > 0, errorMessage);
         uint256 c = a / b;
-
         return c;
     }
 
@@ -55,6 +49,7 @@ library SafeMath {
     }
 }
 
+//*** OWNABLE CONTRACT *** //
 contract Ownable {
     address public _owner;
 
@@ -86,7 +81,9 @@ contract Ownable {
     }
 }
 
-contract Antiample is Ownable {
+// *** XMPL CONTRACT *** //
+
+contract Xmpl is Ownable {
 
     using SafeMath for uint256;
 
@@ -101,24 +98,20 @@ contract Antiample is Ownable {
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 
-    string public constant name = "Antiample";
-    string public constant symbol = "XAMP";
+    string public constant name = "Xmpl";
+    string public constant symbol = "XMPL";
     uint256 public constant decimals = 9;
-
     uint256 private constant DECIMALS = 9;
     uint256 private constant MAX_UINT256 = ~uint256(0);
     uint256 private constant INITIAL_FRAGMENTS_SUPPLY = 10**9 * 10**DECIMALS;
-
     uint256 private constant TOTAL_GONS = MAX_UINT256 - (MAX_UINT256 % INITIAL_FRAGMENTS_SUPPLY);
-
     uint256 private constant MAX_SUPPLY = ~uint128(0);  // (2^128) - 1
-
     uint256 private _totalSupply;
     uint256 private _gonsPerFragment;
     mapping(address => uint256) private _gonBalances;
-
     mapping (address => mapping (address => uint256)) private _allowedFragments;
 
+// *** REBASE *** //    
     function rebase(uint256 epoch, uint256 supplyDelta)
         external
         onlyOwner
@@ -142,6 +135,7 @@ contract Antiample is Ownable {
         return _totalSupply;
     }
 
+// *** CONSTRUCTOR *** //     
     constructor() public override {
         _owner = msg.sender;
         
@@ -152,6 +146,7 @@ contract Antiample is Ownable {
         emit Transfer(address(0x0), _owner, _totalSupply);
     }
 
+// *** TOTAL SUPPLY **** //    
     function totalSupply()
         public
         view
@@ -168,6 +163,7 @@ contract Antiample is Ownable {
         return _gonBalances[who].div(_gonsPerFragment);
     }
 
+// *** TRANSFER *** //    
     function transfer(address to, uint256 value)
         public
         validRecipient(to)
@@ -180,6 +176,7 @@ contract Antiample is Ownable {
         return true;
     }
 
+// *** ALLOWANCE *** //     
     function allowance(address owner_, address spender)
         public
         view
@@ -188,6 +185,7 @@ contract Antiample is Ownable {
         return _allowedFragments[owner_][spender];
     }
 
+// *** TRANSFER FROM *** // 
     function transferFrom(address from, address to, uint256 value)
         public
         validRecipient(to)
@@ -203,6 +201,7 @@ contract Antiample is Ownable {
         return true;
     }
 
+// *** APPROVE *** //    
     function approve(address spender, uint256 value)
         public
         returns (bool)
@@ -212,6 +211,7 @@ contract Antiample is Ownable {
         return true;
     }
 
+// *** INCREASE ALLOWANCE *** //
     function increaseAllowance(address spender, uint256 addedValue)
         public
         returns (bool)
@@ -222,6 +222,7 @@ contract Antiample is Ownable {
         return true;
     }
 
+// *** DECREASE ALLOWANCE *** //
     function decreaseAllowance(address spender, uint256 subtractedValue)
         public
         returns (bool)

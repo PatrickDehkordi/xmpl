@@ -1,0 +1,9 @@
+{
+  "name": "xmpl",
+  "version": "1.0.0",
+  "description": "Example Elastic Token Contract",
+  "main": "xmpl.js",
+  "repository": "https://github.com/PatrickDehkordi/xmpl",
+  "author": "Patrick Dehkordi <patrick.dehkordi@gmail.com>",
+  "license": "MIT"
+}
